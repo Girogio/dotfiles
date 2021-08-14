@@ -1,0 +1,4 @@
+alias cl='clear'
+alias smci='sudo make clean install'
+alias rocket='legendary launch Sugar'
+
