@@ -1,0 +1,2 @@
+#!/bin/dash
+printf "🕥 %s" "$(date '+%H:%M')"

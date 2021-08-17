@@ -1,0 +1,8 @@
+#!/bin/bash
+while getopts i:d: flag
+do
+    case "${flag}" in
+        i) pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +${OPTARG}%;;
+        d) pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -${OPTARG}%;;
+    esac
+done

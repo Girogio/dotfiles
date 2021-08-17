@@ -1,0 +1,8 @@
+#!/bin/bash
+while getopts i:d: flag
+do
+    case "${flag}" in
+        i) xbacklight -inc ${OPTARG};;
+        d) xbacklight -dec ${OPTARG};;
+    esac
+done

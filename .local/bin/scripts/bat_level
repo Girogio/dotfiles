@@ -1,0 +1,45 @@
+#!/bin/bash
+STAT=$(cat /sys/class/power_supply/BAT0/status)
+LVL=$(cat /sys/class/power_supply/BAT0/capacity)
+
+if [ $STAT = Charging ] 
+then
+    echo  $LVL%
+else
+    if [ $LVL -le 10 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 20 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 30 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 40 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 50 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 60 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 70 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 80 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 90 ]
+    then
+        echo  $LVL%
+    elif [ $LVL -le 100]
+    then
+        echo  $LVL%
+    elif [ $LVL -eq 100 ]
+    then
+        echo  $LVL%
+
+    fi
+fi
+
