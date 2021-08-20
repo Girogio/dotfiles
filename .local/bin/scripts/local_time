@@ -1,2 +1,5 @@
 #!/bin/dash
 printf "🕥 %s" "$(date '+%H:%M')"
+
+pkill -SIGRTMIN+0 dwmblocks
+

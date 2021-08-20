@@ -33,13 +33,14 @@ else
     elif [ $LVL -le 90 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 100]
+    elif [ $LVL -le 100 ]
     then
         echo  $LVL%
-    elif [ $LVL -eq 100 ]
+    elif [ $LVL = 100 ]
     then
-        echo  $LVL%
-
+      echo  $LVL%
     fi
 fi
+
+pkill -SIGRTMIN+1 dwmblocks
 
