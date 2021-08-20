@@ -6,37 +6,37 @@ if [ $STAT = Charging ]
 then
     echo  $LVL%
 else
-    if [ $LVL -le 10 ]
+    if [ $LVL -lt 10 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 20 ]
+    elif [ $LVL -lt 20 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 30 ]
+    elif [ $LVL -lt 30 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 40 ]
+    elif [ $LVL -lt 40 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 50 ]
+    elif [ $LVL -lt 50 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 60 ]
+    elif [ $LVL -lt 60 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 70 ]
+    elif [ $LVL -lt 70 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 80 ]
+    elif [ $LVL -lt 80 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 90 ]
+    elif [ $LVL -lt 90 ]
     then
         echo  $LVL%
-    elif [ $LVL -le 100 ]
+    elif [ $LVL -lt 100 ]
     then
         echo  $LVL%
-    elif [ $LVL = 100 ]
+    elif [ $LVL -eq 100 ]
     then
       echo  $LVL%
     fi
