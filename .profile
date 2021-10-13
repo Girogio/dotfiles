@@ -5,6 +5,7 @@ export EDITOR=nvim
 export OPENER=xdg-open
 export PAGER=less
 export SHELL=bash
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/bin/scripts/"
 export XDG_CONFIG_HOME="$HOME/.config"
