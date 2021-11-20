@@ -1,196 +1,87 @@
-" Giorgio Grigolo's nvim cfg.
-"         
-" A customized init.vim for neovim (https://neovim.io/)     
+set relativenumber
+set nocompatible
+set wildmode=longest,list,full
+set wildmenu
+set tabstop=2
+set shiftwidth=2
+set tw=85
+set softtabstop=2
+set expandtab
+set noshiftround
+set clipboard=unnamedplus
+set scrolloff=3
+set backspace=indent,eol,start
+set matchpairs+=<:>
+runtime! macros/matchit.vim
+set noswapfile
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set path+=**					" Searches current directory recursively.
-set wildmenu					" Display all matches when tab complete.
-set incsearch                   " Incremental search
-set hidden                      " Needed to keep multiple buffers open
-set nobackup                    " No auto backups
-set noswapfile                  " No swap
-set t_Co=256                    " Set if term supports 256 colors.
-set number relativenumber       " Display line numbers
-set clipboard=unnamedplus       " Copy/paste between vim and other programs.
-syntax enable
-let g:rehash256 = 1
-set encoding=UTF-8
-let mapleader = ";"
-setlocal spell spelllang=en_gb
-set spell!                      "Disable spellchecker on start.
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VimTex Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:tex_flavor  = 'latex'
-let g:tex_conceal = ''
-let g:vimtex_fold_manual = 1
-let g:vimtex_latexmk_continuous = 1
-let g:vimtex_compiler_progname = 'nvr'
+
+
+set hidden
+set ttyfast
+
+set showmode
+set showcmd
+
+nnoremap / /\v
+vnoremap / /\v
+
+let g:tex_flavor = "latex"
+
+if has('nvim')
+    let g:vimtex_compiler_progname = 'nvr'
+endif
+
 let g:vimtex_view_method = 'zathura'
+" One of the neosnippet plugins will conceal symbols in LaTeX which is
+" confusing
+let g:tex_conceal = ""
+
+let g:Tex_IgnoredWarnings = 
+    \'Underfull'."\n".
+    \'Overfull'."\n".
+    \'specifier changed to'."\n".
+    \'You have requested'."\n".
+    \'Missing number, treated as zero.'."\n".
+    \'There were undefined references'."\n".
+    \'Citation %.%# undefined'."\n".
+    \'Double space found.'."\n"
+let g:Tex_IgnoreLevel = 8
+let g:vimtex_quickfix_open_on_warning = 0
+
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 
-let g:colorizer_auto_color = 1
+map <F8> :w <CR> :!gcc % && ./a.out <CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugin list
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+
 call plug#begin()
-"{{ File management }}
-    Plug 'scrooloose/nerdtree'                         " Nerdtree
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'     " Highlighting Nerdtree
-    Plug 'ryanoasis/vim-devicons'                      " Icons for Nerdtree
-    Plug 'psliwka/vim-smoothie'
-"{{Language support }}
-    Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
-    Plug 'artur-shaik/vim-javacomplete2'
-"{{ Code shortcuts }}
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-    "Plug 'SirVer/ultisnips'
-"{{ Linters }}
-    Plug 'vim-syntastic/syntastic'
-"{{ LaTex }}
-    Plug 'lervag/vimtex'
-"{{ Aesthetics }}
-	Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'Rigellute/shades-of-purple.vim'
-    Plug 'vim-python/python-syntax'                    " Python highlighting
-    Plug 'ap/vim-css-color'                            " Color previews for CSS
+  Plug 'dracula/vim', {'as': 'dracula'}
+	Plug 'KeitaNakamura/tex-conceal.vim'
+  Plug 'itchyny/lightline.vim'
+	Plug 'lervag/vimtex'
+	Plug 'dense-analysis/ale'
+	Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'preservim/nerdtree'
+  Plug 'sirver/ultisnips'
+    let g:UltiSnipsExpandTrigger = '<tab>'
+    let g:UltiSnipsJumpForwardTrigger = '<tab>'
+    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+  Plug 'cdelledonne/vim-cmake'
 call plug#end()
 
-""{{ Deoplete }}
- 
-    call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'tex': g:vimtex#re#deoplete
-      \})
+let g:lightline = { 'colorscheme': 'dracula' }
+au BufReadPost,BufNewFile *.tex VimtexView
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Custom functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"Toggle Deoplete
- function! ToggleDeoplete()
-     if deoplete#is_enabled()
-         call deoplete#disable()
-         echo 'Deoplete OFF'
-     else
-         call deoplete#enable()
-         echo 'Deoplete ON'
-     endif
- endfunction
- nnoremap <silent> <Leader>d :call ToggleDeoplete() <CR>
-
-" Toggle Spellcheck
-function! ToggleSpellCheck()
-    set spell!
-    if &spell
-        echo 'Spellcheck ON'
-    else
-        echo 'Spellcheck OFF'
-    endif
-endfunction 
-nnoremap <silent> <Leader>s :call ToggleSpellCheck() <CR>
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General tweaks
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"" Disable Autocommenting
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
- 
-" Remap ESC to ii
-:imap ii <Esc>
-
-" Chezmoi auto apply
-autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path %
-
-" Mouse scrolling
-set mouse=nicr
-set mouse=a
-
-if (has("termguicolors"))
- set termguicolors
-endif
-colorscheme shades_of_purple
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set expandtab                   " Use spaces instead of tabs.
-set smarttab                    " Be smart using tabs ;)
-set shiftwidth=4                " One tab == four spaces.
-set tabstop=4                   " One tab == four spaces.
-set softtabstop=4
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NERDTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '►'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let NERDTreeShowLineNumbers=0
-let NERDTreeShowHidden=0
-let NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize=38
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-Instant-Markdown
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:instant_markdown_autostart = 0         " Turns off auto preview
-let g:instant_markdown_browser = "surf"      " Uses surf for preview
-map <Leader>md :InstantMarkdownPreview<CR>   " Previews .md file
-map <Leader>ms :InstantMarkdownStop<CR>      " Kills the preview
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Open terminal inside Vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Leader>tt :vnew term://zsh<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mouse Scrolling
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Splits and Tabbed Files
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set splitbelow splitright
-
-" Remap splits navigation to just CTRL + hjkl
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Make adjusing split sizes a bit more friendly
-noremap <silent> <C-Left> :vertical resize +3<CR>
-noremap <silent> <C-Right> :vertical resize -3<CR>
-noremap <silent> <C-Up> :resize +3<CR>
-noremap <silent> <C-Down> :resize -3<CR>
-
-" Change 2 split windows from vert to horiz or horiz to vert
-map <Leader>th <C-w>t<C-w>H
-map <Leader>tk <C-w>t<C-w>K
-
-" Removes pipes | that act as seperators on splits
-set fillchars+=vert:\ 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Other Stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python_highlight_all = 1
-
-au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
-au BufEnter *.org            call org#SetOrgFileType()
-
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-set guioptions-=r  "remove right-hand scroll bar
-set guioptions-=L  "remove left-hand scroll bar
-set guifont=Hack_Bold:h15
+set guifont=SauceCodePro\ Nerd\ Font\ Mono:h16
+syntax on
+colorscheme dracula
+hi Normal ctermbg=none
