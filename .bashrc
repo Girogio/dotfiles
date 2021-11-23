@@ -28,12 +28,13 @@ fi
 bind "set completion-ignore-case on"
 
 #list
-alias ls='ls --color=auto'
+alias ls='ls -l --color=auto'
 alias la='ls -a'
 alias ll='ls -la'
 alias l='ls'
 alias l.="ls -A | egrep '^\.'"
 
+alias maxbrightness="sudo bash -c 'echo 255 > /sys/class/backlight/amdgpu_bl1/brightness'"
 #fix obvious typo's
 alias cd..='cd ..'
 alias pdw="pwd"
@@ -55,10 +56,6 @@ alias df='df -h'
 #pacman unlock
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 alias rmpacmanlock="sudo rm /var/lib/pacman/db.lck"
-
-#arcolinux logout unlock
-alias rmlogoutlock="sudo rm /tmp/arcologout.lock"
-
 #free
 alias free="free -mt"
 
@@ -265,4 +262,8 @@ On_White='\[\e[47m\]'       # White
 NC="\[\e[m\]"               # Color Reset
 
 # Prompt
-export PS1="$BGreen\u$NC $BBlue\w$NC\n$BWhite>$NC "
+export PS1="$NC$BBlue\w $BGreen$ $NC"
+
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+    exec xinit
+fi
